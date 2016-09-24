@@ -47,6 +47,23 @@ function MakeSSHKey()
 # Code Seperator
 #
 
+# CollectKey:  Collect SSH Key for Archive
+# Input Parameters: [Username] [Archive Path]
+function CollectKey()
+{
+	[ ! -e "$2" ] && mkdir -p "$2"
+
+	if [ -e "$2" ]; then
+		cp ~$1/.ssh/id_rsa* "$2"
+	else
+		echo -e "Archive Path Does Not Exists, Can't Archive Key"
+	fi
+}
+
+#
+# Code Seperator
+#
+
 # Usage
 function Usage()
 {
@@ -54,15 +71,18 @@ function Usage()
 	echo -e "-u [user]\tUser to generate key for"
 	echo -e "-h [home]\tHome folder for user"
 	echo -e "-s [bitsize]\tBit size of key (consider 2048 to be minimum)"
+	echo -e "-c [path]\tCopy to key to path for archive"
 }
 
 #
 # Main Loop
 #
 
+# Collect path can be initialized for component scripting purposes
+COLLECT="${COLLECT}"
 KEYSIZE=4096
-USERNAME=${LOGNAME}
-HOMEDIR=${HOME}
+USERNAME="${LOGNAME}"
+HOMEDIR="${HOME}"
 
 while [ ! "$1" = "" ]; do
 	case "$1" in
@@ -75,9 +95,14 @@ while [ ! "$1" = "" ]; do
 		shift 1 ;;
 	"-s")	KEYSIZE="$2"
 		shift 1 ;;
+	"-c")
+		COLLECT="$2"
+		shift 1 ;;
 	esac
 
 	shift 1
 done
 
 MakeSSHKey ${USERNAME} ${HOMEDIR} ${KEYSIZE}
+
+[ ! "${COLLECT}" = "" ] && CollectKey ${USERNAME} ${HOMEDIR} ${COLLECT} 
