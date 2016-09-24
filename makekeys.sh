@@ -15,7 +15,7 @@ function MakeSSHKey()
 		sudo -u $1 chmod u+rwx,go-rwx $2/.ssh
 	fi
 
-	[ -e -f $2/.ssh/id_rsa ] && rm $2/.ssh/id_rsa* > /dev/null
+	[ -f $2/.ssh/id_rsa ] && rm $2/.ssh/id_rsa* > /dev/null
 
 	echo -e "Making $1's RSA Key..."
 	if [ "${PHRASE}" = "None" -o "${PHRASE}" = "" ]; then
