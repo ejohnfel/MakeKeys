@@ -79,7 +79,7 @@ function Usage()
 #
 
 # Collect path can be initialized for component scripting purposes
-COLLECT="${COLLECT}"
+COLLECT="${COLLECTPATH}"
 KEYSIZE=4096
 USERNAME="${LOGNAME}"
 HOMEDIR="${HOME}"
