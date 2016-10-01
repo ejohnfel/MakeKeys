@@ -1,5 +1,11 @@
 #/bin/bash
 
+# [ code-begin MakeSSHKey ]
+# [ from makekeys.sh ]
+
+# Date : 10/1/2016
+# By   : Eric Johnfelt
+
 # Make SSH RSA Key (Replaces Current One)
 # MakeSSHKey [username] [home folder] [bitsize]
 function MakeSSHKey()
@@ -43,9 +49,13 @@ function MakeSSHKey()
 	sudo -u $1 ssh-keygen -b ${KEYSIZE} -t rsa -N "${PHRASE}" -C "${COMMENT}" -f $2/.ssh/id_rsa
 }
 
-#
-# Code Seperator
-#
+# [ code-end MakeSSHKeys ]
+
+# [ code-begin CollectKey ]
+# [ from makekeys.sh ]
+
+# Date : 10/1/2016
+# By   : Eric Johnfelt
 
 # CollectKey:  Collect SSH Key for Archive
 # Input Parameters: [Username] [Archive Path]
@@ -60,9 +70,13 @@ function CollectKey()
 	fi
 }
 
-#
-# Code Seperator
-#
+# [ code-end CollectKey ]
+
+# [ code-begin Usage ]
+# [ from makekeys.sh ]
+
+# Date : 10/1/2016
+# By   : Eric Johnfelt
 
 # Usage
 function Usage()
@@ -73,6 +87,14 @@ function Usage()
 	echo -e "-s [bitsize]\tBit size of key (consider 2048 to be minimum)"
 	echo -e "-c [path]\tCopy to key to path for archive"
 }
+
+# [ code-end Usage ]
+
+# [ code-begin MainLoop ]
+# [ from makekeys.sh ]
+
+# Date : 10/1/2016
+# By   : Eric Johnfelt
 
 #
 # Main Loop
@@ -106,3 +128,5 @@ done
 MakeSSHKey ${USERNAME} ${HOMEDIR} ${KEYSIZE}
 
 [ ! "${COLLECT}" = "" ] && CollectKey ${USERNAME} ${HOMEDIR} ${COLLECT} 
+
+# [ code-end MainLoop ]
